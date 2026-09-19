@@ -1,4 +1,4 @@
-# MASA Task Orchestrator
+﻿# MASA Task Orchestrator
 
 A web-based objective orchestration platform developed with Django, SQLite, and a modern glassmorphism dark-mode user interface.
 
@@ -10,6 +10,10 @@ The codebase follows modular software engineering patterns and OOP structure, de
 - **Defensive Engineering**: Comprehensive validation guards protect against malformed inputs and runtime exceptions.
 - **Modern Design Tokens**: Designed with a high-contrast dark aesthetic adhering to modern developer tooling visual standards.
 
+
+## Preview
+
+![Application Interface](screenshots/app_interface.png)
 ## Features
 
 - Django MVC architecture decoupling views, models, and template layers.
@@ -38,11 +42,12 @@ python todolist_project/manage.py runserver
 
 ```
 .
-├── todolist_project
-├── LICENSE             # MIT License
-└── README.md           # Developer documentation
+â”œâ”€â”€ todolist_project
+â”œâ”€â”€ LICENSE             # MIT License
+â””â”€â”€ README.md           # Developer documentation
 ```
 
 ## License
 
 This project is licensed under the terms of the MIT License. Refer to the `LICENSE` file for details.
+
