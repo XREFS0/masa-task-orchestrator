@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASA Task Orchestrator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B0F17;
+            --card-bg: rgba(22, 27, 39, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent: #6366F1;
+            --accent-hover: #4F46E5;
+            --text-main: #F8FAFC;
+            --text-sub: #94A3B8;
+            --danger: #EF4444;
+            --danger-hover: #DC2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 540px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(99, 102, 241, 0.12);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-add {
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-add:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-add:active {
+            transform: scale(0.98);
+        }
+
+        .task-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .task-content {
+            font-size: 14px;
+            color: #E2E8F0;
+            word-break: break-word;
+            padding-right: 12px;
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: #94A3B8;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 36px 0;
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 11px;
+            color: #64748B;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="brand-badge">Engineered by MASA</span>
+            <h1 class="title">Task Orchestrator</h1>
+            <p class="subtitle">High-throughput workflow & agenda management</p>
+        </div>
+
+        <form class="input-form" action="/addTodo/" method="post">
+            {% csrf_token %}
+            <input class="input-field" type="text" name="content" placeholder="Enter new objective..." required autofocus autocomplete="off">
+            <button class="btn-add" type="submit">Deploy Task</button>
+        </form>
+
+        <ul class="task-list">
+            {% for todo_item in all_items %}
+            <li class="task-item">
+                <span class="task-content">{{ todo_item.content }}</span>
+                <form action="/deleteTodo/{{ todo_item.id }}/" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button class="btn-delete" type="submit">Dismiss</button>
+                </form>
+            </li>
+            {% empty %}
+            <div class="empty-state">
+                No active objectives. Everything is up to date!
+            </div>
+            {% endfor %}
+        </ul>
+
+        <div class="footer">
+            MASA Task Engine &bull; All Rights Reserved &copy; 2026
+        </div>
+    </div>
+</body>
+</html>
